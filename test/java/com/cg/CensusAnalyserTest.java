@@ -20,4 +20,14 @@ public class CensusAnalyserTest {
 		    Assert.assertEquals(29, numOfRecords);
 		}catch(CensusAnalyserException e) {}
 	}
+	
+	@Test
+	public void givenIndianCensusCSVFile_IfIncorrectReturnsCustomException() throws IOException {
+		try {
+			 CensusAnalyser censusAnalyser = new CensusAnalyser();
+			 censusAnalyser.loadIndiaCensusData(WRONG_CSV_FILE_PATH);
+		}catch(CensusAnalyserException e) {
+			Assert.assertEquals(CensusAnalyserException.ExceptionType.UNABLE_TO_PARSE,e.type);
+		}
+	}
 }
