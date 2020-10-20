@@ -13,13 +13,14 @@ import com.opencsv.CSVReader;
 
 public class CensusAnalyser {
 
-	public int loadIndiaCensusData(String indiaCensusCsvFilePath) throws CensusAnalyserException, IOException {
+	public int loadIndiaCensusData(String csvFilePath) throws CensusAnalyserException, IOException {
 		try{
-			Reader reader = Files.newBufferedReader(Paths.get(indiaCensusCsvFilePath));
+			Reader reader = Files.newBufferedReader(Paths.get(csvFilePath));
 			CsvToBeanBuilder<IndiaCensusCSV> csvToBeanBuilder = new CsvToBeanBuilder<>(reader);
-			csvToBeanBuilder.withType(IndiaCensusCSV.class);
-			csvToBeanBuilder.withIgnoreLeadingWhiteSpace(true);
-			CsvToBean<IndiaCensusCSV> csvToBean = csvToBeanBuilder.build();
+			
+			CsvToBean<IndiaCensusCSV> csvToBean = csvToBeanBuilder.withType(IndiaCensusCSV.class)
+					                              .withIgnoreLeadingWhiteSpace(true)
+					                              .build();
 			Iterator<IndiaCensusCSV> censusCSVIterator = csvToBean.iterator();
 			int numOfEntries = 0;
 			while(censusCSVIterator.hasNext()) {
